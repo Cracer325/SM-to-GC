@@ -1,6 +1,6 @@
 # SMtoGC
 
-Used to convert a calendar in [Schedule maker](schedulemaker.io) to a calendar in google calendar.<br />
+Used to convert a calendar in [Schedule maker](https://schedulemaker.io) to a calendar in google calendar.<br />
 
 How to use: <br />
   Make the calendar in [Schedule maker](schedulemaker.io) <br />
