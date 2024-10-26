@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -12,13 +12,12 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
-using Google.Apis.Util;
-using Google.Apis.Util.Store;
 using Newtonsoft.Json;
 
 
 namespace SMtoGC
 {
+
     internal class Program
     {
 
@@ -119,7 +118,7 @@ namespace SMtoGC
             string clientSecret = "...";
             //Copy paste the contents of the JSON file
             string json = @"";
-            Console.WriteLine("Enter the time offset in hours from GMT: ");
+            Console.WriteLine("Enter the time offset in hours from GMT+0: ");
             int timeZone = int.Parse(Console.ReadLine());
             string[] scopes = { "https://www.googleapis.com/auth/calendar" };
 
