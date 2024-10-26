@@ -82,21 +82,21 @@ namespace SMtoGC
         }
 
 
-        public static Event CreateNewEventForGC(int dd, string title, int start_hour, int start_minute, int end_hour, int end_minute, string color)
+        public static Event CreateNewEventForGC(int dd, string title, int start_hour, int start_minute, int end_hour, int end_minute, string color, int offset)
         {
             //MAKE SURE TO CHANGE TO YOUR OWN TIME ZONE
+            DateTime sunday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek);
             string TIMEZ = "GMT";
-
             Event googleCalendarEvent = new Event();
-            int[] days = { 14, 15, 16, 17, 18, 19, 13 };
+            int[] days = { int.Parse(sunday.ToString("dd"))+1, int.Parse(sunday.ToString("dd"))+2, int.Parse(sunday.ToString("dd"))+3, int.Parse(sunday.ToString("dd"))+4, int.Parse(sunday.ToString("dd"))+5, int.Parse(sunday.ToString("dd"))+6, int.Parse(sunday.ToString("dd")) };
             //Start date
             googleCalendarEvent.Start = new EventDateTime()
-            { DateTimeDateTimeOffset = new DateTimeOffset(2024, 10, days[dd], start_hour, start_minute, 0, TimeSpan.FromHours(3)),
+            { DateTimeDateTimeOffset = new DateTimeOffset(2024, 10, days[dd], start_hour, start_minute, 0, TimeSpan.FromHours(offset)),
             TimeZone=TIMEZ};
 
             //End date
             googleCalendarEvent.End = new EventDateTime()
-            { DateTimeDateTimeOffset = new DateTimeOffset(2024, 10, days[dd], end_hour, end_minute, 0, TimeSpan.FromHours(3)),
+            { DateTimeDateTimeOffset = new DateTimeOffset(2024, 10, days[dd], end_hour, end_minute, 0, TimeSpan.FromHours(offset)),
             TimeZone = TIMEZ
             };
 
@@ -119,8 +119,8 @@ namespace SMtoGC
             string clientSecret = "...";
             //Copy paste the contents of the JSON file
             string json = @"";
-
-
+            Console.WriteLine("Enter the time offset in hours from GMT: ");
+            int timeZone = int.Parse(Console.ReadLine());
             string[] scopes = { "https://www.googleapis.com/auth/calendar" };
 
             var credentials = GoogleWebAuthorizationBroker.AuthorizeAsync(
@@ -142,7 +142,7 @@ namespace SMtoGC
                 var currentEvent = JsonConvert.DeserializeObject<JEvent>(thisjson);
                 try
                 {
-                    Event result = await service.Events.Insert(CreateNewEventForGC(currentEvent.Day, currentEvent.Title, int.Parse(currentEvent.Start.Split(':')[0]), int.Parse(currentEvent.Start.Split(':')[1]), int.Parse(currentEvent.End.Split(':')[0]), int.Parse(currentEvent.End.Split(':')[1]), currentEvent.Color), calendarId).ExecuteAsync();
+                    Event result = await service.Events.Insert(CreateNewEventForGC(currentEvent.Day, currentEvent.Title, int.Parse(currentEvent.Start.Split(':')[0]), int.Parse(currentEvent.Start.Split(':')[1]), int.Parse(currentEvent.End.Split(':')[0]), int.Parse(currentEvent.End.Split(':')[1]), currentEvent.Color, timeZone), calendarId).ExecuteAsync();
 
                     Console.WriteLine($"Event created: {result.HtmlLink}\n");
                 }
