@@ -3,6 +3,7 @@
 Used to convert a calendar in [Schedule maker](https://schedulemaker.io) to a calendar in google calendar.<br />
 
 How to use: <br />
+  First install the code and make sure you have all the packages installed (GoogleApis, Newtonsoft) <br />
   Make the calendar in [Schedule maker](https://schedulemaker.io) <br />
   click Save then Export file <br />
   Copy paste the contents of the JSON file to into the json string in the code while you're there, change the TimeZone variable in the CreateNewGCEvent Method! <br /> <br />
